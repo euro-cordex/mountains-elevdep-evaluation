@@ -2,8 +2,6 @@
 
 # Mountains-elevdep-evaluation
 
-<img src="https://imgs.xkcd.com/comics/data_trap.png" width="300" align="right"/>
-
 Mountains-elevdep evaluation of the CMIP6 downscaling within EURO-CORDEX.
 
 This repository is intended to centralize the coordination of the Mountains-elevdep evaluation study, as part of the broader ([EURO-CORDEX joint evaluation effort](https://github.com/euro-cordex/joint-evaluation)).
