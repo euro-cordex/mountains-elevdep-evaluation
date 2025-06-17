@@ -1,0 +1,27 @@
+name: jsc
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - xarray
+  - xesmf
+  - py-cordex
+  - cartopy
+  - intake-esm
+  - dask
+  - cf_xarray
+  - jupyterlab
+  - cmocean
+  - h5netcdf
+  - scipy
+  - netcdf4
+  - aiohttp
+  - compliance-checker
+  - requests
+  - regionmask
+  - seaborn
+  - plotnine
+  - pip
+  - pip:
+    - git+https://github.com/euro-cordex/evaltools
+    - git+https://github.com/euro-cordex/py-cordex
