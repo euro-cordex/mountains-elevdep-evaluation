@@ -12,6 +12,6 @@ There is also a repository ([evaltools](https://github.com/euro-cordex/evaltools
 
 Details on data exchange and available datasets is available from the ([joint evaluation github landing page](https://github.com/euro-cordex/joint-evaluation)). Data storage and analysis is on the jsc-cordex data exchange infrastructure at ([JSC](https://github.com/euro-cordex/jsc-cordex)).
 
-[xkcd](https://xkcd.com) comic used under [CC BY-NC 2.5 license](https://xkcd.com/license.html)
+
 
 ## Preparing a working environment
