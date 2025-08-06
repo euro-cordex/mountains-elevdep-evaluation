@@ -34,6 +34,26 @@ var_dic = {
         "units": "K",
         "datasets": ["era5", "cerra"],
     },
+    "tasmin": {
+        "variable": "tasmin",
+        "name": "Temperature BIAS [K]",
+        "diff": "abs",
+        "aggr": "mean",
+        "levels": [-5, -4, -3, -2, -1, -0.5, 0.5, 1, 2, 3, 4, 5],
+        "cmap": "RdBu_r",
+        "units": "K",
+        "datasets": ["era5", "cerra"],
+    },
+    "tasmax": {
+        "variable": "tasmax",
+        "name": "Temperature BIAS [K]",
+        "diff": "abs",
+        "aggr": "mean",
+        "levels": [-5, -4, -3, -2, -1, -0.5, 0.5, 1, 2, 3, 4, 5],
+        "cmap": "RdBu_r",
+        "units": "K",
+        "datasets": ["era5", "cerra"],
+    },
     "pr": {
         "variable": "pr",
         "name": "Precipitation BIAS [%]",
@@ -330,7 +350,7 @@ def regional_means(dsets, regions=None, aggr=None):
 
 
 def standardize_unit(ds, variable):
-    if variable == "tas":
+    if variable in ["tas", "tasmin", "tasmax"]:
         ds = convert_celsius_to_kelvin(ds)
     elif variable == "pr":
         ds = convert_precipitation_to_mm(ds)
