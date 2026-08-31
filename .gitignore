@@ -108,3 +108,5 @@ ENV/
 intermediate-results/
 plots/
 fig/
+intermediate-nc/
+intermediate-csv/
