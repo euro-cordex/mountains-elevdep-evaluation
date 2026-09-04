@@ -36,25 +36,27 @@ dask.config.set(scheduler="single-threaded")
 
 # client = Client(dashboard_address="localhost:8889", threads_per_worker=1)
 
+# %% settings
+
+overwrite = True
+# variable = "tasmin"
+frequency = "mon"
+# domain = "EUR-11"
+regridding = "bilinear"
+year_start = "1991"
+year_end = "2020"
+parent = False
+period = slice(year_start, year_end)
+mip_era = "CMIP6"
+driving_source_id = "ERA5"
+
+save_results_path = "intermediate-nc/"
+
+# %% run all
+
 all_variables = ["pr", "tas", "tasmax", "tasmin"]
 
 for variable in all_variables:
-
-    # %% settings
-
-    overwrite = True
-    # variable = "tasmin"
-    frequency = "mon"
-    # domain = "EUR-11"
-    regridding = "bilinear"
-    year_start = "1991"
-    year_end = "2020"
-    parent = False
-    period = slice(year_start, year_end)
-    mip_era = "CMIP6"
-    driving_source_id = "ERA5"
-
-    save_results_path = "intermediate-nc/"
 
 
     # %% check if file already exists
@@ -134,51 +136,39 @@ for variable in all_variables:
     seasonal_bias = xr.concat(
         list(diffs.values()),
         dim=xr.DataArray(
-            list(
-                map(
-                    lambda x: short_iid(x, ["source_id"], delimiter="-"),
-                    diffs.keys(),
-                )
-            ),
+            list(diffs.keys()),
             dims="dset_id",
         ),
         compat="override",
         coords="minimal",
     )
 
-
+    # seasonal_bias.dset_id.values
 
 
     # %% save files
-    seasonal_bias.to_netcdf(
-        f"{save_results_path}/eobs_{variable}_{mip_era}_{period.start}-{period.stop}_spatial_bias.nc"
-    )
+    seasonal_bias.to_netcdf(fn_out)
 
 
 
 
     # %% save orog grids separately
-    dsets_orog = dict.fromkeys(dsets)
-    for dset in dsets.keys():
-        if "orog" in dsets[dset].variables:
-            dsets_orog[dset] = dsets[dset]["orog"]
-    dsets_orog = {k: v for k, v in dsets_orog.items() if v is not None}
+    # dsets_orog = dict.fromkeys(dsets)
+    # for dset in dsets.keys():
+    #     if "orog" in dsets[dset].variables:
+    #         dsets_orog[dset] = dsets[dset]["orog"]
+    # dsets_orog = {k: v for k, v in dsets_orog.items() if v is not None}
 
-    xds_orog = xr.concat(
-        list(dsets_orog.values()),
-        dim=xr.DataArray(
-            list(
-                map(
-                    lambda x: short_iid(x, ["source_id"], delimiter="-"),
-                    dsets_orog.keys(),
-                )
-            ),
-            dims="dset_id",
-        ),
-        compat="override",
-        coords="minimal",
-    )
+    # xds_orog = xr.concat(
+    #     list(dsets_orog.values()),
+    #     dim=xr.DataArray(
+    #         list(dsets_orog.keys()),
+    #         dims="dset_id",
+    #     ),
+    #     compat="override",
+    #     coords="minimal",
+    # )
 
-    xds_orog.to_netcdf(
-        f"{save_results_path}/orog.nc"
-    )
+    # xds_orog.to_netcdf(
+    #     f"{save_results_path}/orog.nc"
+    # )

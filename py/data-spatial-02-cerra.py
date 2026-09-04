@@ -36,25 +36,28 @@ dask.config.set(scheduler="single-threaded")
 
 # client = Client(dashboard_address="localhost:8889", threads_per_worker=1)
 
+# %% settings
+
+overwrite = True
+# variable = "tasmin"
+frequency = "mon"
+# domain = "EUR-11"
+regridding = "bilinear"
+year_start = "1991"
+year_end = "2020"
+parent = False
+period = slice(year_start, year_end)
+mip_era = "CMIP6"
+driving_source_id = "ERA5"
+
+save_results_path = "intermediate-nc/"
+
+# %% run all
+
 all_variables = ["pr", "tas", "tasmax", "tasmin"]
 
 for variable in all_variables:
 
-    # %% settings
-
-    overwrite = False
-    # variable = "tasmin"
-    frequency = "mon"
-    # domain = "EUR-11"
-    regridding = "bilinear"
-    year_start = "1991"
-    year_end = "2020"
-    parent = False
-    period = slice(year_start, year_end)
-    mip_era = "CMIP6"
-    driving_source_id = "ERA5"
-
-    save_results_path = "intermediate-nc/"
 
 
     # %% check if file already exists
@@ -138,12 +141,7 @@ for variable in all_variables:
     seasonal_bias = xr.concat(
         list(diffs.values()),
         dim=xr.DataArray(
-            list(
-                map(
-                    lambda x: short_iid(x, ["source_id"], delimiter="-"),
-                    diffs.keys(),
-                )
-            ),
+            list(diffs.keys()),
             dims="dset_id",
         ),
         compat="override",
