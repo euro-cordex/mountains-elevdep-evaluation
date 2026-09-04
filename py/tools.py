@@ -121,7 +121,7 @@ variable_mapping = {
     "cerra": {"tas": "t2m", "pr": "tp", "tasmin": "tasmin", "tasmax": "tasmax"},
     "cerra-land": {"tas": "tas", "pr": "tp"},
     "era5": {"tas": "t2m", "pr": "tp"},
-    "rocio-ibeb": {"pr": "precipitation"},
+    "rocio-ibeb": {"pr": "precipitation", "tasmin": "mintemp", "tasmax": "maxtemp"},
 }
 
 # List of models that need regridding although they are on rotated pole

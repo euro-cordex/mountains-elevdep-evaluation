@@ -9,7 +9,7 @@ library(purrr)
 elev_bins <- 200
 elev_breaks <- c(-20, seq(elev_bins, 3100 - elev_bins, by = elev_bins), 3100)
 
-
+# 'project_id.domain_id.institution_id.driving_source_id.driving_experiment_id.driving_variant_label.source_id.version_realization.frequency.version'
 id_elements <- c(
   "era",
   "domain",

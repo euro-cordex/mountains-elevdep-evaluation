@@ -1,5 +1,6 @@
 # temporary code R
 
+dat <- fread("intermediate-csv/rocio_tasmin.csv")
 dat <- fread("intermediate-csv/cerra_tasmin.csv")
 dat <- fread("intermediate-csv/eobs_tasmin.csv")
 dat[, .N, dset_id]
@@ -32,3 +33,11 @@ dat[, c(id_elements) := tstrsplit(dset_id, "[.]")]
 dat[, .N, .(institute, rcm)]
 dat[rcm == "HadREM3-GA7-05", .N, .(version)]
 dat[rcm == "GCOAST-AHOIB1-1", .N, .(realisation, ds_version, version)]
+
+
+dat_mm |>
+  ggplot(aes(rlon_y, rlat_y, fill = val_mean)) +
+  geom_raster() +
+  facet_grid(. ~ season) +
+  coord_fixed(ratio = 1) +
+  cowplot::theme_map()

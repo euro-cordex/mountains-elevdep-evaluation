@@ -20,10 +20,6 @@ xds_orog = xr.open_dataset("intermediate-nc/orog.nc")
 df_orog = xds_orog.to_dataframe().reset_index()
 df_orog2 = df_orog[["rlat", "rlon", "dset_id", "orog"]]
 
-# round rlat and rlon coordinates for better merging later
-df_orog2.loc[:,"rlat"] = df_orog2["rlat"].round(4)
-df_orog2.loc[:,"rlon"] = df_orog2["rlon"].round(4)
-
 # %% main loop
 l_ref_data = ["eobs", "cerra"]
 l_variable = ["tas", "tasmax", "tasmin", "pr"]
