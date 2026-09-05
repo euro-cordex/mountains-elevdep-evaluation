@@ -272,6 +272,8 @@ for variable in all_variables:
             print(f"Temporal coverage of dataset does not match with {period}")
         ref_seasmean = seasonal_mean(dset_rot[variable].sel(time=period)).compute()
         # ref_seasmean_apgd.isel(season=0).plot()
+        if(variable != "pr"):
+            ref_seasmean = ref_seasmean + 273.15
 
         seasonal_bias = calc_seasonal_bias(ref_seasmean)
 
