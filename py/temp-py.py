@@ -47,3 +47,26 @@ df_regions_orog = df_regions_orog.drop(columns=["rlon_key", "rlat_key", "rlat_x"
 # df_regions_orog = pd.merge(df_regions, df_orog2)
 
 df_regions_orog.to_csv(f"{path_csv}/{ref_data}_{variable}.csv")
+
+# 18 for daily pr
+
+dsets = open_datasets(
+    ["pr"],
+    frequency=frequency,
+    driving_source_id=driving_source_id,
+    mask=True,
+    add_missing_bounds=False,
+)
+
+kk = 'CORDEX-CMIP6.EUR-12.IDL-FCUL.ERA5.evaluation.r1i1p1f1.WRF451Q.v1-r1.day.v20240630'
+dsets[kk]
+
+dsets2 = open_datasets(
+    ["pr", "tas"],
+    frequency=frequency,
+    driving_source_id=driving_source_id,
+    mask=True,
+    add_missing_bounds=False,
+)
+
+

@@ -32,7 +32,7 @@ import geopandas as gpd
 
 # %% settings
 
-overwrite = False
+overwrite = True
 variable = "pr"
 frequency = "mon"
 # domain = "EUR-11"

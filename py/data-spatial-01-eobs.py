@@ -153,22 +153,22 @@ for variable in all_variables:
 
 
     # %% save orog grids separately
-    # dsets_orog = dict.fromkeys(dsets)
-    # for dset in dsets.keys():
-    #     if "orog" in dsets[dset].variables:
-    #         dsets_orog[dset] = dsets[dset]["orog"]
-    # dsets_orog = {k: v for k, v in dsets_orog.items() if v is not None}
+    dsets_orog = dict.fromkeys(dsets)
+    for dset in dsets.keys():
+        if "orog" in dsets[dset].variables:
+            dsets_orog[dset] = dsets[dset]["orog"]
+    dsets_orog = {k: v for k, v in dsets_orog.items() if v is not None}
 
-    # xds_orog = xr.concat(
-    #     list(dsets_orog.values()),
-    #     dim=xr.DataArray(
-    #         list(dsets_orog.keys()),
-    #         dims="dset_id",
-    #     ),
-    #     compat="override",
-    #     coords="minimal",
-    # )
+    xds_orog = xr.concat(
+        list(dsets_orog.values()),
+        dim=xr.DataArray(
+            list(dsets_orog.keys()),
+            dims="dset_id",
+        ),
+        compat="override",
+        coords="minimal",
+    )
 
-    # xds_orog.to_netcdf(
-    #     f"{save_results_path}/orog.nc"
-    # )
+    xds_orog.to_netcdf(
+        f"{save_results_path}/orog.nc"
+    )
