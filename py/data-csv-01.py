@@ -20,6 +20,12 @@ xds_orog = xr.open_dataset("intermediate-nc/orog.nc")
 df_orog = xds_orog.to_dataframe().reset_index()
 df_orog2 = df_orog[["rlat", "rlon", "dset_id", "orog"]]
 
+xds_orog_mean = xds_orog.median(dim="dset_id")
+xds_orog_mean.orog.plot()
+df_orog_mean = xds_orog_mean.to_dataframe().reset_index()
+df_orog_mean2 = df_orog_mean[["rlat", "rlon", "lat", "lon", "orog"]]
+df_orog_mean2.to_csv(f"{path_csv}/orog/mean_orog_rcm.csv")
+
 # %% main loop
 l_ref_data = ["eobs", "cerra"]
 l_variable = ["tas", "tasmax", "tasmin", "pr"]
@@ -31,7 +37,7 @@ for ref_data in l_ref_data:
         # variable = "tas"
         # elev_bins = 200
 
-        xds = xr.open_dataset("intermediate-nc/" + ref_data + "_" + variable + "_CMIP6_1991-2020_spatial_bias.nc")
+        xds = xr.open_dataset("intermediate-nc/" + ref_data + "_" + variable + "_CMIP6_1991-2010_spatial_bias.nc")
         df = xds.to_dataframe().reset_index()
 
         mask = regions.mask_3D(xds["lon"], xds["lat"], drop=False)
@@ -57,6 +63,4 @@ for ref_data in l_ref_data:
             "crs", "mask", "areacella"])
 
         df_regions_orog.to_csv(f"{path_csv}/{ref_data}_{variable}.csv")
-
-
 

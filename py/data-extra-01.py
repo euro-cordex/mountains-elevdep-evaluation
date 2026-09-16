@@ -38,7 +38,7 @@ frequency = "mon"
 # domain = "EUR-11"
 regridding = "bilinear"
 year_start = "1991"
-year_end = "2020"
+year_end = "2010"
 parent = False
 period = slice(year_start, year_end)
 mip_era = "CMIP6"
@@ -176,6 +176,7 @@ for variable in all_variables:
     if variable in ["pr", "tasmax", "tasmin"]:
 
         fn_out = f"{save_path}/rocio-ibeb_{variable}_{period.start}-{period.stop}.csv"
+        fn_out_obs = f"intermediate-nc/raw-obs/rocio-ibeb_{variable}_{period.start}-{period.stop}.nc"
         if not os.path.exists(fn_out) or overwrite:
 
             variable_rocio = rocio_dir[variable]
@@ -196,6 +197,7 @@ for variable in all_variables:
             df_regions_orog = make_df_regions_orog(seasonal_bias)
 
             df_regions_orog.to_csv(fn_out)
+            ref_seasmean_rocio.to_netcdf(fn_out_obs)
 
 
 
@@ -204,6 +206,7 @@ for variable in all_variables:
     if variable in ["pr"]:
 
         fn_out = f"{save_path}/apgd_{variable}_{period.start}-{period.stop}.csv"
+        fn_out_obs = f"intermediate-nc/raw-obs/apgd_{variable}_{period.start}-{period.stop}.nc"
         if not os.path.exists(fn_out) or overwrite:
 
             fn_apgd = "/mnt/CORDEX_CMIP6_tmp/aux_data/apgd/APGDv2_laea_vertices.nc"
@@ -225,12 +228,14 @@ for variable in all_variables:
             df_regions_orog = make_df_regions_orog(seasonal_bias)
 
             df_regions_orog.to_csv(fn_out)
+            ref_seasmean.to_netcdf(fn_out_obs)
 
 
 
     # %% iberia01
 
     fn_out = f"{save_path}/iberia01_{variable}_{period.start}-{period.stop}.csv"
+    fn_out_obs = f"intermediate-nc/raw-obs/iberia01_{variable}_{period.start}-{period.stop}.nc"
     if not os.path.exists(fn_out) or overwrite:
         fn = f"/mnt/CORDEX_CMIP6_tmp/aux_data/iberia01/{iberia_files[variable]}"
         ds = xr.open_dataset(fn)
@@ -251,10 +256,12 @@ for variable in all_variables:
         df_regions_orog = make_df_regions_orog(seasonal_bias)
 
         df_regions_orog.to_csv(fn_out)
+        ref_seasmean.to_netcdf(fn_out_obs)
 
 
     # %% carpatclim
     fn_out = f"{save_path}/carpatclim_{variable}_{period.start}-{period.stop}.csv"
+    fn_out_obs = f"intermediate-nc/raw-obs/carpatclim_{variable}_{period.start}-{period.stop}.nc"
     if not os.path.exists(fn_out) or overwrite:
         fn = f"/mnt/CORDEX_CMIP6_tmp/aux_data/carpatclim/{carpatclim_files[variable]}"
         ds = xr.open_dataset(fn)
@@ -280,3 +287,4 @@ for variable in all_variables:
         df_regions_orog = make_df_regions_orog(seasonal_bias)
 
         df_regions_orog.to_csv(fn_out)
+        ref_seasmean.to_netcdf(fn_out_obs)

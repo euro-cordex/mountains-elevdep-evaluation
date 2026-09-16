@@ -24,7 +24,7 @@ id_elements <- c(
 )
 
 
-dat_elev <- dir_ls("intermediate-csv/") |>
+dat_elev <- dir_ls("intermediate-csv/", type = "file") |>
   map(\(fn) {
     fn_info <- path_file(fn) |>
       path_ext_remove() |>
@@ -113,10 +113,11 @@ for (i_var in c("tas", "tasmin", "tasmax")) {
     ylab("Elevation band [m]")
 
   ggsave(
-    str_c("fig/elevdep/modelmeanens_", i_var, ".pdf"),
+    str_c("fig/bias-modelmean/", i_var, ".pdf"),
     gg,
     width = 16,
-    height = 8
+    height = 8,
+    create.dir = T
   )
 }
 
@@ -159,4 +160,4 @@ gg <- dat_elev_mm[variable == "pr"] |>
   xlab("Pr bias: Ensemble mean and range [%]") +
   ylab("Elevation band [m]")
 
-ggsave("fig/elevdep/modelmeanens_pr.pdf", gg, width = 16, height = 8)
+ggsave("fig/bias-modelmean/pr.pdf", gg, width = 16, height = 8)

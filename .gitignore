@@ -105,9 +105,7 @@ ENV/
 .vscode/
 
 # custom
-intermediate-results/
+nohup.out
 plots/
 fig/
-intermediate-nc/
-intermediate-csv/
-intermediate-csv-extra/
+intermediate*

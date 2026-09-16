@@ -41,3 +41,31 @@ dat_mm |>
   facet_grid(. ~ season) +
   coord_fixed(ratio = 1) +
   cowplot::theme_map()
+
+
+dir_ls("intermediate-csv/", type = "file") |>
+  str_subset("orog", negate = T)
+
+dat_zz <- dir_ls("intermediate-csv/", type = "file")[1:2] |>
+  str_subset("orog", negate = T) |>
+  map(\(fn) {
+    fn_info <- path_file(fn) |>
+      path_ext_remove() |>
+      str_split_1("_")
+
+    variable <- fn_info[2]
+    ref_data <- fn_info[1]
+
+    dat <- fread(fn)
+    dat[, elev_grp := cut(orog, breaks = elev_breaks, dig.lab = 5)]
+    setnames(dat, variable, "value")
+
+    dat2 <- dat[,
+      .(value = mean(value), nn = .N),
+      .(dset_id, season, region = names, elev_grp)
+    ]
+    cbind(dat2, variable, ref_data)
+  }) |>
+  rbindlist()
+
+dat_zz$region |> table()

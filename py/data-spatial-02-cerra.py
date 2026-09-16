@@ -44,7 +44,7 @@ frequency = "mon"
 # domain = "EUR-11"
 regridding = "bilinear"
 year_start = "1991"
-year_end = "2020"
+year_end = "2010"
 parent = False
 period = slice(year_start, year_end)
 mip_era = "CMIP6"
@@ -61,9 +61,10 @@ for variable in all_variables:
 
 
     # %% check if file already exists
-    fn_out = f"{save_results_path}/cerra_{variable}_{mip_era}_{period.start}-{period.stop}_spatial_bias.nc"
-    if os.path.exists(fn_out) and not overwrite:
-        print(f"File {fn_out} already exists. Skipping processing.")
+    fn_out_bias = f"{save_results_path}/cerra_{variable}_{mip_era}_{period.start}-{period.stop}_spatial_bias.nc"
+    fn_out_obs = f"{save_results_path}/raw-obs/cerra_{variable}_{period.start}-{period.stop}.nc"
+    if os.path.exists(fn_out_bias) and not overwrite:
+        print(f"File {fn_out_bias} already exists. Skipping processing.")
         continue
 
 
@@ -152,7 +153,8 @@ for variable in all_variables:
 
 
     # %% save files
-    seasonal_bias.to_netcdf(fn_out)
+    seasonal_bias.to_netcdf(fn_out_bias)
+    ref_seasmean.to_netcdf(fn_out_obs)
 
 
 

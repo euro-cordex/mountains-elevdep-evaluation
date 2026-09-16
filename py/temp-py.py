@@ -70,3 +70,34 @@ dsets2 = open_datasets(
 )
 
 
+ref_seasmean.keys()
+# ref_seasmean.sel("DJF")
+ref_seasmean.sel(season="DJF").plot()
+zz = eobs.tn.isel(time=0)
+zz.plot()
+
+
+eobs = obs.eobs(variables=eobs_var, add_mask=False).sel(time=period)
+
+zz2 = eobs.tn.isel(time=0)
+# zz2 = eobs.tn.isel(time=000)
+zz2.plot()
+
+eobs2 = mask_invalid(eobs, vars=eobs_var, threshold=0.3)
+zz3 = eobs2.tn.isel(time=0)
+zz3 = eobs2.tn.isel(time=10000)
+zz3.plot()
+
+zz4 = eobs_rot.isel(time=0)
+zz4.tn.plot()
+
+
+regridder = xe.Regridder(eobs, rotated_grid, method=regridding, unmapped_to_nan=True)
+eobs_rot2 = regridder(eobs)
+eobs_rot2.isel(time=0).tn.plot()
+
+
+
+
+dd = dsets2["CORDEX-CMIP6.EUR-12.CLMcom-Hereon.ERA5.evaluation.r1i1p1f1.CCLM6-0-1.v1-r1.mon.v20230222"]
+dd.isel(time=0).tasmin.plot()
