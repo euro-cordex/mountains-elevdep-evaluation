@@ -101,3 +101,24 @@ eobs_rot2.isel(time=0).tn.plot()
 
 dd = dsets2["CORDEX-CMIP6.EUR-12.CLMcom-Hereon.ERA5.evaluation.r1i1p1f1.CCLM6-0-1.v1-r1.mon.v20230222"]
 dd.isel(time=0).tasmin.plot()
+
+
+zz = xr.open_mfdataset([
+    "/mnt/CORDEX_CMIP6_tmp/aux_data/cerra/day/tasmax/tasmax_raw_CERRA_19910101_19911231.nc",
+    "/mnt/CORDEX_CMIP6_tmp/aux_data/cerra/day/tasmax/tasmax_raw_CERRA_19920101_19921231.nc"
+])
+xr.open_dataset("/mnt/CORDEX_CMIP6_tmp/aux_data/cerra/day/tasmax/tasmax_raw_CERRA_19910101_19911231.nc")
+
+
+period = slice("1991", "1992")
+
+eobs = obs.eobs(variables=eobs_var, add_mask=False).sel(time=period)
+eobs = mask_invalid(eobs, vars=eobs_var, threshold=0.1)
+eobs = eobs.assign(
+    pr_liquid=xr.where(eobs["tg"] >= 202 - 200, eobs["rr"], 0),
+    pr_solid=xr.where(eobs["tg"] < 202 - 200, eobs["rr"], 0),
+)
+
+eobs.pr_liquid.isel(time=0).plot()
+eobs.pr_solid.isel(time=0).plot()
+plt.figure()

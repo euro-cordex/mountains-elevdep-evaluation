@@ -21,7 +21,7 @@ df_orog = xds_orog.to_dataframe().reset_index()
 df_orog2 = df_orog[["rlat", "rlon", "dset_id", "orog"]]
 
 xds_orog_mean = xds_orog.median(dim="dset_id")
-xds_orog_mean.orog.plot()
+# xds_orog_mean.orog.plot()
 df_orog_mean = xds_orog_mean.to_dataframe().reset_index()
 df_orog_mean2 = df_orog_mean[["rlat", "rlon", "lat", "lon", "orog"]]
 df_orog_mean2.to_csv(f"{path_csv}/orog/mean_orog_rcm.csv")

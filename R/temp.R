@@ -69,3 +69,17 @@ dat_zz <- dir_ls("intermediate-csv/", type = "file")[1:2] |>
   rbindlist()
 
 dat_zz$region |> table()
+
+
+dat_orog
+dat <- fread("intermediate-nc-precsep/eobs_1991-2010.csv")
+
+dat2 <- dat[!is.na(pr_solid)]
+
+dat2[between(lat, 40, 50) & between(lon, 0, 20)] |>
+  ggplot(aes(rlon, rlat, fill = pr_liquid)) +
+  geom_raster() +
+  coord_fixed(ratio = 1) +
+  facet_wrap(~season) +
+  scale_fill_viridis_c(option = "B") +
+  cowplot::theme_map()
